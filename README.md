@@ -9,10 +9,14 @@ later a second model), instead of the paper's 1T+ frontier models.
   Impossible-LiveCodeBench. Result: it is a *competent naive hacker* — ~46% hack propensity on impossible
   tasks (near the frontier band), ~29% successful hacks where hardcoding suffices, but ~0% where the hack
   needs sophistication it lacks. See `results/exp1/FINAL_RESULTS.md`.
-- **Phase 1 — DoM probe replication: IN PROGRESS.** Build a difference-of-means reward-hacking direction
-  from synthetic contrast pairs, show it detects hacking in the Phase-0 rollouts (vs an LLM monitor),
-  read it out with the logit lens, and test it causally with honeypot steering. Plan in
-  `notes/replication_plan.md`.
+- **Phase 1 — DoM probe replication: DONE (OLMo).** Built a difference-of-means reward-hacking direction
+  from 211 synthetic contrast pairs. Results in `results/probe/RESULTS.md`:
+  - **Logit-lens: replicates** — the vector decodes to cheating words (bypass/fake/cheat/dummy/pretend).
+  - **Detection: core claim replicates** — AUROC 0.78–0.84 (in the paper's 0.74–0.97 range); but weaker
+    than our LLM monitor at low FPR (52% vs 81% TPR @ 10% FPR), unlike the paper's probe≈monitor.
+  - **Honeypot steering: does not cleanly transfer** — OLMo Think reasons too long to reach code within a
+    feasible generation budget, so the paper's bait-uptake protocol isn't measurable here.
+  Plan in `notes/replication_plan.md`.
 
 ## Layout
 - `notes/` — `paper_notes.md` (method we replicate), `background_research.md` (models/benchmarks/prior work),
