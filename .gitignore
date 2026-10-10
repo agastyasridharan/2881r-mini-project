@@ -1,0 +1,13 @@
+# external cloned repos (re-clone as needed; see README)
+vendor/
+# local venv
+.venv-judge/
+.venv/
+# python
+__pycache__/
+*.pyc
+# large raw-log backups (regenerable; parsed transcripts are kept)
+*.tgz
+# scratch
+scratchpad/
+.DS_Store
