@@ -81,6 +81,7 @@ def main():
     ap.add_argument("--rollouts", required=True)
     ap.add_argument("--outdir", required=True)
     ap.add_argument("--max-len", type=int, default=16384)
+    ap.add_argument("--no-score", action="store_true", help="skip rollout scoring (just build DoM + logit-lens)")
     args = ap.parse_args()
     os.makedirs(args.outdir, exist_ok=True)
 
@@ -156,6 +157,10 @@ def main():
     print("saved logit-lens (span harvest, all layers):", flush=True)
     for L in CANDIDATE_LAYERS:
         print(f"  span_L{L}: {lens[f'span_L{L}']}", flush=True)
+
+    if args.no_score:
+        print("DONE (no-score: DoM + logit-lens only)", flush=True)
+        return
 
     # ---- Stage 3: score rollouts (both harvests x layers, max & mean pooling) ----
     rollouts = [json.loads(l) for l in open(args.rollouts) if l.strip()]

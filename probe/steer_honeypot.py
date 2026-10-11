@@ -46,6 +46,8 @@ def main():
     ap.add_argument("--n", type=int, default=50)
     ap.add_argument("--strengths", type=float, nargs="*", default=[0, 2, 4, 6, 8])
     ap.add_argument("--max-new", type=int, default=1024)
+    ap.add_argument("--random", action="store_true", help="control: steer along a seeded random unit vector instead of v_hack")
+    ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
@@ -55,7 +57,13 @@ def main():
     model.eval()
 
     Lnum = int(args.layer.split("_L")[-1])  # 'span_L40'->40, 'L40'->40
-    v = np.load(args.dom)[args.layer]
+    dom_v = np.load(args.dom)[args.layer]
+    if args.random:
+        rng = np.random.RandomState(args.seed)
+        v = rng.randn(dom_v.shape[0]).astype(np.float32)  # random unit vector, same dim (control)
+        print(f"[CONTROL] steering along a RANDOM unit vector (seed {args.seed})", flush=True)
+    else:
+        v = dom_v
     v = v / (np.linalg.norm(v) + 1e-8)
     v_t = torch.tensor(v, device=model.device, dtype=torch.bfloat16)
 
