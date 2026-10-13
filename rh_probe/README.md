@@ -60,4 +60,27 @@ GLM 63%. A judge audit found that 17 of GLM's 65 original-split passes were them
   - T4 judged resamples.
   - T3b judged resamples and summaries: `steer_neg/`.
 
-Raw rollouts (~800 MB) and per-token probe scores are not included; they stay on the cluster.
+## Qwen data for reproduction on CPU
+- **`results/rollouts/qwen_rollouts.jsonl.gz`**: all 271 Qwen3.8-27B rollouts (conflicting 92, original 91,
+  oneoff 88). Each row has:
+  - `chat`: the full transcript, with reasoning.
+  - `passages`: the (step, channel) units that were judged and scored.
+  - `tools`: the tool schemas served to the model.
+  - `score`, plus task `metadata`.
+
+  Uids match `results/labels/judge_full.jsonl`.
+- **`results/dom/qwen/dom_vectors.npz`**: DoM vectors, shape [64 layers, 5120], for span/turn/last × all and each
+  hack family. Also `logit_lens.json`.
+- **`results/dom/qwen/pair_acts_{span,turn,last}_{hack,honest}.npz`**: per-pair activations for the 135 usable
+  synthetic pairs, `acts` [135, 64, 5120] float16, plus `families`. The original `pair_acts.npz` is split one array
+  per file to stay under GitHub's 100 MB limit, and the split was checked to be identical. For split-half
+  reliability, `dom = acts_hack[idx].mean(0) - acts_honest[idx].mean(0)` over any subset of pairs.
+- **`results/t2/qwen_part{1,2,3}/`**: the per-passage probe scores: `scores_0.npz` holds `max`/`mean` arrays
+  [passages, 64 layers, 3 keys], and `index_0.jsonl` maps each row to uid / passage / token span. To reproduce the
+  held-out AUROC of 0.927 (turn · L40 · max) on CPU:
+  ```
+  python3 t2_analyze.py --scores results/t2/qwen_part1 results/t2/qwen_part2 results/t2/qwen_part3 \
+      --labels results/labels/judge_full.jsonl --out t2_qwen.json
+  ```
+
+GLM and gpt-oss raw rollouts and per-token scores are not included; they stay on the cluster.
