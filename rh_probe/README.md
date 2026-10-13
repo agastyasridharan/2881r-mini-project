@@ -55,6 +55,7 @@ GLM 63%. A judge audit found that 17 of GLM's 65 original-split passes were them
 - **`report/`**: the HTML template, the filled report, and the generated fragments.
 - **`results/`**:
   - Judge labels per passage: `labels/`.
+  - Qwen rollouts, DoM vectors, pair activations and probe scores: `rollouts/`, `dom/qwen/`, `t2/` (see below).
   - T0, T2 and T3 summaries.
   - Raw steering outputs: `t3_raw/`.
   - T4 judged resamples.
