@@ -21,6 +21,9 @@ later a second model), instead of the paper's 1T+ frontier models.
   stage split (the probe scores 0.92–0.93 on considered hacks vs 0.71–0.74 on carried-out ones), a capability
   control, and negative steering on GLM (no reduction in hacking until the model breaks). See `rh_probe/README.md`
   and `rh_probe/report/rh_probe_report_filled.html`.
+- **RL against the probe (gpt-oss-120b): DONE.** GRPO with a probe penalty, a linear penalty, or a probe filter,
+  vs no probe. The penalised policy evades the fixed threshold (held-out recall 78% → 29%) without lowering AUROC,
+  mostly through what it writes, and a reasoning-only LLM monitor still catches 97% of its hacks. See `rh_rl/README.md`.
 
 ## Layout
 - `notes/` — `paper_notes.md` (method we replicate), `background_research.md` (models/benchmarks/prior work),

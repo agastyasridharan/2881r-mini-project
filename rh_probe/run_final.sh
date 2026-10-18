@@ -12,5 +12,6 @@ python3 t0_capability.py data/t0_capability.json
 python3 cap_section.py
 python3 t3_section.py
 python3 steer_section.py
+python3 rl_section.py
 python3 fill_report.py
 head -3 data/t2_qwen_final.txt; head -3 data/t2_gptoss_v1.txt

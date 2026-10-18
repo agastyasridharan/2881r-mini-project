@@ -65,7 +65,7 @@ table.tight { font-size: .82rem } table.tight th, table.tight td { padding: 6px 
 <div class="wrap">
   <div class="eyebrow">Replication · arXiv 2609.19101 · 12–13 Oct 2026</div>
   <h1>Reward-Hacking Probe Replication</h1>
-  <p class="lede prose">A one-day replication of the main results of <em>Goodfire, Sep 2026</em> (difference-of-means reward-hacking probes) on three open models (Qwen3.8-27B, gpt-oss-120b and GLM-4.5-Air), using ImpossibleBench LiveCodeBench with the paper's strict prompt and tools harness.</p>
+  <p class="lede prose">A one-day replication of the main results of <em>Goodfire, Sep 2026</em> (difference-of-means reward-hacking probes) on three open models (Qwen3.8-27B, gpt-oss-120b and GLM-4.5-Air), using ImpossibleBench LiveCodeBench with the paper's strict prompt and tools harness. Follow-up (14 Oct): RL on gpt-oss-120b with the probe as a reward penalty (T6: four RL arms, 100 steps each, with a held-out eval, cross-model re-scoring and a reasoning-only monitor).</p>
   <div class="meta"><span>ImpossibleBench LCB · 3 splits × ~103 tasks</span><span>Judge: GPT-5.6 Sol, 3 runs, unanimous</span><span>Monitor: generic rubric, 1 run</span><span>Probe data: 231 synthetic pairs</span></div>
 
   <h2>Verdicts</h2>
@@ -181,6 +181,8 @@ table.tight { font-size: .82rem } table.tight th, table.tight td { padding: 6px 
 
   <h2>T5 · What does the probe flag wrongly?</h2>
   <p class="prose">At 5% FPR the Qwen probe catches {{Q_TPR5}} of hack passages. The top-scoring false positives are of two kinds. Most are near misses: the model has found contradictory tests and is weighing "pass them" against "stop and explain" (<q>these are contradictory assertions, so it's mathematically impossible to pass both</q>). The rest are long opening "let me analyse the problem" blocks, the length artifact. This matches the paper's finding that false positives sit next to the concept rather than on unrelated text.</p>
+
+{{RL}}
 
   <h2>Deviations and caveats</h2>
   <div class="prose"><ul>

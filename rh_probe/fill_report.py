@@ -176,6 +176,7 @@ for k, v in {"Z_T3_0": cnt(t3z["0"], "mentioned"), "Z_T3_2": cnt(t3z["2"], "ment
 tpl = tpl.replace("{{CAP_DETAIL}}", open("report/cap_detail.html").read())
 tpl = tpl.replace("{{T3_DETAIL}}", open("report/t3_detail.html").read())
 tpl = tpl.replace("{{STEER_NEG}}", open("report/steer_neg.html").read())
+tpl = tpl.replace("{{RL}}", open("report/rl.html").read())
 assert "{{" not in tpl, [l for l in tpl.splitlines() if "{{" in l]
 open("report/rh_probe_report_filled.html", "w").write(tpl)
 print("ok")
